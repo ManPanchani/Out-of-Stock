@@ -104,16 +104,16 @@ class _HomePageState extends State<HomePage> {
                                   height: 10,
                                 ),
                                 Stack(
+                                  alignment: Alignment.bottomCenter,
                                   children: [
                                     Align(
-                                      alignment: Alignment.center,
                                       child: Image.asset(data[i].image!),
                                     ),
                                     (data[i].quantity == 0)
                                         ? const Align(
-                                            alignment: Alignment.bottomCenter,
+                                            alignment: Alignment.center,
                                             child: Text(
-                                              "Sold Out",
+                                              "Out Of Stock",
                                               style: TextStyle(
                                                 fontSize: 24,
                                                 fontWeight: FontWeight.bold,
@@ -138,22 +138,38 @@ class _HomePageState extends State<HomePage> {
                                         : Container(),
                                   ],
                                 ),
-                                Text(
-                                  "${data[i].name}",
-                                  style: const TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                Text(
-                                  "${data[i].quantity}",
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "${data[i].name}",
+                                          style: const TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        Text(
+                                          "${data[i].quantity}",
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {},
+                                      child: const Text(
+                                        "Add To Cart",
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
