@@ -21,8 +21,8 @@ class Product {
       image: data.image,
       quantity: data.quantity,
       price: data.price,
-      outOfStock: data.outOfStock,
-      counterStart: data.counterStart,
+      outOfStock: false,
+      counterStart: false,
     );
   }
 }
@@ -31,10 +31,10 @@ class ProductDB {
   final int? id;
   final String? name;
   final String? image;
-  final int? quantity;
+  late final int? quantity;
   final int? price;
-  final bool? outOfStock;
-  final bool? counterStart;
+  late final bool? outOfStock;
+  late final bool? counterStart;
 
   ProductDB({
     required this.id,
@@ -53,8 +53,8 @@ class ProductDB {
       image: data['Image'],
       quantity: data['Quantity'],
       price: data['Price'],
-      outOfStock: data['OutOfStock'],
-      counterStart: data['CounterStart'],
+      outOfStock: false,
+      counterStart: false,
     );
   }
 }

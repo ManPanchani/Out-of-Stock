@@ -55,10 +55,17 @@ class DBHelper {
 
     List<ProductDB> productDB =
         data.map((e) => ProductDB.fromMap(data: e)).toList();
+
+    print("=======================");
+    print(productDB);
+    print("=======================");
+
+
     return productDB;
+
   }
 
-  Future<void> updateRecord({required int id, required int quantity}) async {
+  Future<void> updateRecord({required int id, required int quantity, required String text}) async {
     await initDB();
 
     int? a = await db?.rawUpdate(

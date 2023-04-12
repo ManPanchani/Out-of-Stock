@@ -14,11 +14,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int a = Random().nextInt(Global.products.length);
+
   outOfStock() async {
     Future.delayed(const Duration(seconds: 30), () async {
-      int a = Random().nextInt(Global.products.length);
+      a;
 
-      await DBHelper.dbHelper.updateRecord(quantity: 0, id: a);
+      await DBHelper.dbHelper.updateRecord(
+        quantity: 0,
+        id: a,
+        text: 'Out Of Stock',
+      );
     });
   }
 
@@ -41,12 +47,30 @@ class _HomePageState extends State<HomePage> {
     return null;
   }
 
+  int t = 30;
+
+  getOut() async {
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        if (t > 0) {
+          getOut();
+          setState(() {
+            t--;
+          });
+        }
+        return null;
+      },
+    );
+  }
+
   Future? getData;
 
   @override
   void initState() {
     getData = DBHelper.dbHelper.fetchAllRecode();
     outOfStock();
+    getOut();
     super.initState();
   }
 
@@ -61,7 +85,9 @@ class _HomePageState extends State<HomePage> {
         title: const Text("Shopping App"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed('CartPage');
+            },
             icon: const Icon(
               CupertinoIcons.shopping_cart,
             ),
@@ -109,33 +135,27 @@ class _HomePageState extends State<HomePage> {
                                     Align(
                                       child: Image.asset(data[i].image!),
                                     ),
-                                    (data[i].quantity == 0)
-                                        ? const Align(
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              "Out Of Stock",
-                                              style: TextStyle(
-                                                fontSize: 24,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.red,
-                                              ),
-                                            ),
+                                    (data[i].id == a)
+                                        ? StatefulBuilder(
+                                            builder: (context, setState) {
+                                              return Text(
+                                                t.toString(),
+                                                style: const TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.red,
+                                                ),
+                                              );
+                                            },
                                           )
-                                        : Container(),
-                                    (Random().nextInt(
-                                                (Global.products.length)) ==
-                                            true)
-                                        ? Align(
-                                            alignment: Alignment.topRight,
-                                            child: Text(
-                                              "$second",
-                                              style: const TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                        : const Text(
+                                            "Out of Stock",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
                                             ),
-                                          )
-                                        : Container(),
+                                          ),
                                   ],
                                 ),
                                 const SizedBox(
